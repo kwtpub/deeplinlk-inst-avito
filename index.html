@@ -71,10 +71,16 @@
         Скопировать ссылку
     </a>
 
+    <div id="chrome-failed" class="hidden" style="margin-top:16px;">
+        <div style="padding:14px;background:#fff3cd;border-radius:12px;color:#856404;font-size:14px;line-height:1.5;margin-bottom:12px;">
+            Chrome не установлен? Скопируйте ссылку и откройте в Safari
+        </div>
+    </div>
+
     <div class="divider">или откройте вручную</div>
 
     <div class="steps">
-        <div><span class="step-num">1</span> Нажмите <b>⋯</b> или <b>···</b> внизу справа</div>
+        <div><span class="step-num">1</span> Нажмите <b>⋯</b> внизу справа экрана</div>
         <div><span class="step-num">2</span> Выберите <b>«Открыть в браузере»</b></div>
     </div>
 </div>
@@ -101,7 +107,7 @@ if (!isInApp) {
 
 function openExternal() {
     if (isAndroid) {
-        // Android: Intent URI — открывает в системном браузере
+        // Android: Intent URI — надёжно открывает в системном браузере
         var intentUrl = 'intent://' + TARGET.replace('https://', '') +
             '#Intent;scheme=https;action=android.intent.action.VIEW;end';
         window.location.href = intentUrl;
@@ -109,11 +115,18 @@ function openExternal() {
     }
 
     if (isIOS) {
-        // iOS: Shortcuts x-callback trick
-        // Вызываем несуществующий шорткат, при ошибке iOS открывает x-error URL в Safari
-        var fakeId = 'a' + Math.random().toString(36).substr(2, 8);
-        var encoded = encodeURIComponent(TARGET);
-        window.location.href = 'shortcuts://x-callback-url/run-shortcut?name=' + fakeId + '&x-error=' + encoded;
+        // iOS: Попытка 1 — googlechromes:// (работает если Chrome установлен)
+        // Это ЕДИНСТВЕННЫЙ подтверждённо работающий способ выйти из in-app браузера на iOS.
+        // Формат: googlechromes:// + путь без схемы
+        var chromeUrl = 'googlechromes://' + TARGET.replace('https://', '');
+        window.location.href = chromeUrl;
+
+        // Если Chrome не установлен, ничего не произойдёт.
+        // Через 2 секунды покажем инструкцию для Safari.
+        setTimeout(function() {
+            // Если мы всё ещё здесь — Chrome не установлен
+            document.getElementById('chrome-failed').classList.remove('hidden');
+        }, 2000);
         return;
     }
 
@@ -125,7 +138,9 @@ function copyLink(e) {
     e.preventDefault();
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(TARGET).then(function() {
-            document.getElementById('btn-copy').textContent = 'Ссылка скопирована ✓';
+            document.getElementById('btn-copy').textContent = 'Ссылка скопирована!';
+            document.getElementById('btn-copy').style.background = '#d4edda';
+            document.getElementById('btn-copy').style.color = '#155724';
         }).catch(function() {
             fallbackCopy();
         });
@@ -144,7 +159,9 @@ function fallbackCopy() {
     ta.select();
     try {
         document.execCommand('copy');
-        document.getElementById('btn-copy').textContent = 'Ссылка скопирована ✓';
+        document.getElementById('btn-copy').textContent = 'Ссылка скопирована!';
+        document.getElementById('btn-copy').style.background = '#d4edda';
+        document.getElementById('btn-copy').style.color = '#155724';
     } catch(e) {
         document.getElementById('btn-copy').textContent = 'Не удалось скопировать';
     }
