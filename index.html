@@ -24,72 +24,143 @@
         .title{font-size:20px;font-weight:700;color:#222;margin-bottom:8px}
         .sub{color:#888;font-size:14px;line-height:1.5;margin-bottom:28px}
         .btn{
-            display:block;
-            width:100%;
-            padding:18px 24px;
-            background:#00aaff;
-            color:#fff;
-            text-decoration:none;
-            border-radius:14px;
-            font-size:17px;
-            font-weight:600;
-            text-align:center;
-            -webkit-tap-highlight-color:transparent;
-            transition:background .15s;
+            display:block;width:100%;padding:18px 24px;
+            background:#00aaff;color:#fff;text-decoration:none;
+            border-radius:14px;font-size:17px;font-weight:600;
+            text-align:center;-webkit-tap-highlight-color:transparent;
+            transition:background .15s;cursor:pointer;border:none;
         }
         .btn:active{background:#0095e0}
+        .btn-secondary{
+            display:block;width:100%;padding:14px 24px;
+            background:#f0f0f0;color:#333;text-decoration:none;
+            border-radius:14px;font-size:15px;font-weight:500;
+            text-align:center;margin-top:12px;
+            -webkit-tap-highlight-color:transparent;
+        }
         .divider{
-            margin:24px 0;
-            display:flex;align-items:center;gap:12px;
+            margin:24px 0;display:flex;align-items:center;gap:12px;
             color:#ccc;font-size:13px;
         }
-        .divider::before,.divider::after{
-            content:'';flex:1;height:1px;background:#eee;
-        }
+        .divider::before,.divider::after{content:'';flex:1;height:1px;background:#eee}
         .steps{
-            padding:20px;
-            background:#f7f7f7;
-            border-radius:14px;
-            text-align:left;
-            font-size:14px;
-            color:#555;
-            line-height:1.7;
+            padding:20px;background:#f7f7f7;border-radius:14px;
+            text-align:left;font-size:14px;color:#555;line-height:1.7;
         }
         .steps b{color:#222}
         .step-num{
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            width:22px;height:22px;
-            background:#00aaff;
-            color:#fff;
-            border-radius:50%;
-            font-size:12px;
-            font-weight:700;
-            margin-right:6px;
+            display:inline-flex;align-items:center;justify-content:center;
+            width:22px;height:22px;background:#00aaff;color:#fff;
+            border-radius:50%;font-size:12px;font-weight:700;margin-right:6px;
         }
+        .hidden{display:none}
     </style>
 </head>
 <body>
 
-<div class="c">
+<div class="c" id="page-inapp">
     <div class="icon">🛒</div>
     <div class="title">Кожаный чехол на iPhone 17 Pro</div>
-    <div class="sub">Чтобы открыть объявление, нажмите кнопку ниже</div>
+    <div class="sub">Нажмите кнопку чтобы открыть в браузере</div>
 
-    <a class="btn" id="link"
-       href="https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnQPQALXXLWl3Bd2Ya_mzrvHxs68jRgH-svENE43zn0FlvE-bd_6IShLkhM3U_aem_7v-YtZCIiGnbjc774_3Tng"
-       target="_blank" rel="noopener">
+    <button class="btn" id="btn-open" onclick="openExternal()">
         Открыть на Avito
+    </button>
+
+    <a class="btn-secondary" id="btn-copy" href="#" onclick="copyLink(event)">
+        Скопировать ссылку
     </a>
 
-    <div class="divider">или</div>
+    <div class="divider">или откройте вручную</div>
 
     <div class="steps">
         <div><span class="step-num">1</span> Нажмите <b>⋯</b> или <b>···</b> внизу справа</div>
         <div><span class="step-num">2</span> Выберите <b>«Открыть в браузере»</b></div>
     </div>
 </div>
+
+<div class="c hidden" id="page-normal">
+    <div class="icon">⏳</div>
+    <div class="title">Переходим на Avito...</div>
+</div>
+
+<script>
+var TARGET = 'https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnQPQALXXLWl3Bd2Ya_mzrvHxs68jRgH-svENE43zn0FlvE-bd_6IShLkhM3U_aem_7v-YtZCIiGnbjc774_3Tng';
+
+var ua = navigator.userAgent || '';
+var isInApp = /Instagram|FBAN|FBAV/i.test(ua);
+var isAndroid = /Android/i.test(ua);
+var isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+// Если НЕ in-app браузер — сразу редирект
+if (!isInApp) {
+    document.getElementById('page-inapp').classList.add('hidden');
+    document.getElementById('page-normal').classList.remove('hidden');
+    window.location.replace(TARGET);
+}
+
+function openExternal() {
+    if (isAndroid) {
+        // Android: Intent URI — открывает в системном браузере
+        var intentUrl = 'intent://' + TARGET.replace('https://', '') +
+            '#Intent;scheme=https;action=android.intent.action.VIEW;end';
+        window.location.href = intentUrl;
+        return;
+    }
+
+    if (isIOS) {
+        // iOS Метод 1: x-safari-https — открывает Safari напрямую
+        window.location.href = TARGET.replace('https://', 'x-safari-https://');
+
+        // iOS Метод 2: x-web-search (через 600мс если первый не сработал)
+        setTimeout(function() {
+            window.location.href = 'x-web-search://?' + TARGET;
+        }, 600);
+
+        // iOS Метод 3: Shortcuts callback trick (через 1200мс)
+        setTimeout(function() {
+            var fakeId = 'a' + Math.random().toString(36).substr(2, 8);
+            var encoded = encodeURIComponent(TARGET);
+            window.location.href = 'shortcuts://x-callback-url/run-shortcut?name=' + fakeId + '&x-error=' + encoded;
+        }, 1200);
+
+        return;
+    }
+
+    // Fallback
+    window.location.href = TARGET;
+}
+
+function copyLink(e) {
+    e.preventDefault();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(TARGET).then(function() {
+            document.getElementById('btn-copy').textContent = 'Ссылка скопирована ✓';
+        }).catch(function() {
+            fallbackCopy();
+        });
+    } else {
+        fallbackCopy();
+    }
+}
+
+function fallbackCopy() {
+    var ta = document.createElement('textarea');
+    ta.value = TARGET;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+        document.execCommand('copy');
+        document.getElementById('btn-copy').textContent = 'Ссылка скопирована ✓';
+    } catch(e) {
+        document.getElementById('btn-copy').textContent = 'Не удалось скопировать';
+    }
+    document.body.removeChild(ta);
+}
+</script>
 
 </body>
 </html>
