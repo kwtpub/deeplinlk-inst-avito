@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кожаный чехол на iPhone 17 Pro</title>
 
-    <!-- OG теги для красивого превью в Instagram -->
     <meta property="og:title" content="Кожаный чехол на iPhone 17 Pro">
     <meta property="og:description" content="Смотреть объявление на Avito">
     <meta property="og:type" content="website">
@@ -21,13 +20,9 @@
             min-height: 100vh;
             padding: 20px;
         }
-        .container {
-            text-align: center;
-            max-width: 400px;
-        }
+        .container { text-align: center; max-width: 400px; }
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 3px solid #ddd;
             border-top-color: #00aaff;
             border-radius: 50%;
@@ -36,23 +31,39 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         p { color: #555; font-size: 16px; margin-bottom: 16px; }
-        a {
+        .btn {
             display: inline-block;
-            padding: 14px 32px;
+            padding: 16px 40px;
             background: #00aaff;
             color: #fff;
             text-decoration: none;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 600;
+            margin-top: 8px;
+        }
+        .hint {
+            color: #999;
+            font-size: 13px;
+            margin-top: 16px;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="loading">
         <div class="spinner"></div>
-        <p>Открываем ссылку...</p>
-        <a id="fallback-link" href="#" style="display:none;">Открыть вручную</a>
+        <p>Переходим на Avito...</p>
+    </div>
+
+    <div class="container" id="manual" style="display:none;">
+        <p style="font-size:18px; color:#333; font-weight:600;">Откройте в браузере</p>
+        <p>Встроенный браузер Instagram не поддерживает переход. Нажмите кнопку ниже:</p>
+        <a class="btn" id="manual-link" href="#">Открыть в браузере</a>
+        <p class="hint">
+            Или нажмите <b>⋯</b> (три точки) в правом нижнем углу<br>
+            → <b>«Открыть в браузере»</b>
+        </p>
     </div>
 
     <script>
@@ -60,62 +71,60 @@
             var TARGET = 'https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnQPQALXXLWl3Bd2Ya_mzrvHxs68jRgH-svENE43zn0FlvE-bd_6IShLkhM3U_aem_7v-YtZCIiGnbjc774_3Tng';
 
             var ua = navigator.userAgent || '';
-            var isInstagramBrowser = /Instagram/i.test(ua);
+            var isInApp = /Instagram|FBAN|FBAV|Line\/|Twitter|MicroMessenger/i.test(ua);
             var isAndroid = /Android/i.test(ua);
             var isIOS = /iPhone|iPad|iPod/i.test(ua);
 
-            function showFallback() {
-                var link = document.getElementById('fallback-link');
-                link.href = TARGET;
-                link.style.display = 'inline-block';
+            function showManual() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('manual').style.display = 'block';
+                document.getElementById('manual-link').href = TARGET;
             }
 
-            // Если не Instagram браузер — просто редиректим
-            if (!isInstagramBrowser) {
-                window.location.href = TARGET;
+            // Не in-app — просто редирект
+            if (!isInApp) {
+                window.location.replace(TARGET);
                 return;
             }
 
-            // --- Instagram In-App Browser ---
-
+            // === ANDROID ===
             if (isAndroid) {
-                // Android: intent:// схема открывает Chrome/системный браузер
-                var intentUrl = 'intent://' + TARGET.replace(/^https?:\/\//, '') +
-                    '#Intent;scheme=https;package=com.android.chrome;end';
+                // Метод 1: Intent с fallback на любой браузер
+                var intentUrl = 'intent://' +
+                    TARGET.replace('https://', '') +
+                    '#Intent;scheme=https;action=android.intent.action.VIEW;end';
                 window.location.href = intentUrl;
-
-                // Фоллбэк если intent не сработал
-                setTimeout(showFallback, 2000);
-
-            } else if (isIOS) {
-                // iOS: Используем несколько методов
-
-                // Метод 1: window.open с _system (иногда работает)
-                // Метод 2: Создаём ссылку с target=_blank
-                // Метод 3: Google redirect (надёжный способ выбросить из in-app браузера)
-
-                // Самый надёжный способ для iOS Instagram — через Google redirect
-                var googleRedirect = 'googlechrome://' + TARGET.replace(/^https?:\/\//, '');
-
-                // Пробуем открыть через Chrome scheme
-                window.location.href = googleRedirect;
-
-                // Если Chrome не установлен, через 500мс пробуем Safari
-                setTimeout(function() {
-                    // x-safari-https:// scheme
-                    window.location.href = 'x-safari-https://' + TARGET.replace(/^https?:\/\//, '');
-                }, 500);
-
-                // Если ничего не сработало — фоллбэк через обычный редирект
-                setTimeout(function() {
-                    window.location.href = TARGET;
-                    showFallback();
-                }, 1500);
-
-            } else {
-                // Десктоп или неизвестное устройство
-                window.location.href = TARGET;
+                setTimeout(showManual, 2500);
+                return;
             }
+
+            // === iOS ===
+            if (isIOS) {
+                // Метод 1: Трюк с window.open — иногда пробивает in-app браузер
+                var w = window.open(TARGET, '_blank');
+
+                // Метод 2: Создать невидимый <a target=_blank> и программно кликнуть
+                setTimeout(function() {
+                    var a = document.createElement('a');
+                    a.href = TARGET;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    document.body.appendChild(a);
+                    a.click();
+                }, 300);
+
+                // Метод 3: Через location с параметром, ломающим кэш in-app
+                setTimeout(function() {
+                    window.location.href = TARGET + '&_t=' + Date.now();
+                }, 800);
+
+                // Если ничего не сработало — показываем кнопку + инструкцию
+                setTimeout(showManual, 2000);
+                return;
+            }
+
+            // Десктоп / другое
+            window.location.replace(TARGET);
         })();
     </script>
 </body>
