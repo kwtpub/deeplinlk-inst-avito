@@ -109,16 +109,11 @@ function openExternal() {
     }
 
     if (isIOS) {
-        // iOS Метод 1: x-safari-https — открывает Safari напрямую
-        window.location.href = TARGET.replace('https://', 'x-safari-https://');
-
-        // iOS Метод 2: Shortcuts callback trick (через 1500мс если первый не сработал)
-        setTimeout(function() {
-            var fakeId = 'a' + Math.random().toString(36).substr(2, 8);
-            var encoded = encodeURIComponent(TARGET);
-            window.location.href = 'shortcuts://x-callback-url/run-shortcut?name=' + fakeId + '&x-error=' + encoded;
-        }, 1500);
-
+        // iOS: Shortcuts x-callback trick
+        // Вызываем несуществующий шорткат, при ошибке iOS открывает x-error URL в Safari
+        var fakeId = 'a' + Math.random().toString(36).substr(2, 8);
+        var encoded = encodeURIComponent(TARGET);
+        window.location.href = 'shortcuts://x-callback-url/run-shortcut?name=' + fakeId + '&x-error=' + encoded;
         return;
     }
 
