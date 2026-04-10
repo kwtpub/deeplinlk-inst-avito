@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест методов</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,sans-serif;padding:20px;background:#fff}
+        h2{font-size:18px;margin-bottom:8px}
+        .ua{font-size:11px;color:#999;word-break:break-all;margin-bottom:20px;padding:10px;background:#f5f5f5;border-radius:8px}
+        button{
+            display:block;width:100%;padding:16px;margin-bottom:12px;
+            border:none;border-radius:12px;font-size:15px;font-weight:600;
+            cursor:pointer;text-align:left;
+        }
+        .blue{background:#e3f2fd;color:#1565c0}
+        .green{background:#e8f5e9;color:#2e7d32}
+        .orange{background:#fff3e0;color:#e65100}
+        .purple{background:#f3e5f5;color:#6a1b9a}
+        .red{background:#fce4ec;color:#c62828}
+        .gray{background:#f5f5f5;color:#333}
+        .num{font-size:12px;color:#999;display:block;margin-bottom:2px}
+        .divider{height:1px;background:#eee;margin:16px 0}
+    </style>
+</head>
+<body>
+
+<h2>User Agent:</h2>
+<div class="ua" id="ua"></div>
+
+<h2>Нажми каждую кнопку и скажи что произошло:</h2>
+<br>
+
+<button class="blue" onclick="test1()">
+    <span class="num">#1</span>
+    x-safari-https://google.com
+</button>
+
+<button class="blue" onclick="test2()">
+    <span class="num">#2</span>
+    x-safari-https://www.avito.ru (без пути)
+</button>
+
+<button class="green" onclick="test3()">
+    <span class="num">#3</span>
+    x-safari-http://www.avito.ru/moskva/...
+</button>
+
+<button class="green" onclick="test4()">
+    <span class="num">#4</span>
+    x-safari://www.avito.ru/moskva/...
+</button>
+
+<button class="orange" onclick="test5()">
+    <span class="num">#5</span>
+    googlechrome://www.avito.ru/moskva/...
+</button>
+
+<button class="orange" onclick="test6()">
+    <span class="num">#6</span>
+    googlechromes://www.avito.ru/moskva/...
+</button>
+
+<button class="purple" onclick="test7()">
+    <span class="num">#7</span>
+    window.open(url, '_blank')
+</button>
+
+<button class="purple" onclick="test8()">
+    <span class="num">#8</span>
+    window.open(url, '_system')
+</button>
+
+<button class="red" onclick="test9()">
+    <span class="num">#9</span>
+    Программный клик &lt;a target=_blank&gt;
+</button>
+
+<button class="red" onclick="test10()">
+    <span class="num">#10</span>
+    location.href (прямой редирект)
+</button>
+
+<button class="gray" onclick="test11()">
+    <span class="num">#11</span>
+    intent:// (Android)
+</button>
+
+<button class="gray" onclick="test12()">
+    <span class="num">#12</span>
+    x-safari-https://google.com (через &lt;a&gt; клик)
+</button>
+
+<script>
+var SHORT = 'https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389';
+var FULL = SHORT + '?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio';
+
+document.getElementById('ua').textContent = navigator.userAgent;
+
+function test1() {
+    window.location.href = 'x-safari-https://google.com';
+}
+
+function test2() {
+    window.location.href = 'x-safari-https://www.avito.ru';
+}
+
+function test3() {
+    window.location.href = 'x-safari-http://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389';
+}
+
+function test4() {
+    window.location.href = 'x-safari://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389';
+}
+
+function test5() {
+    window.location.href = 'googlechrome://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389';
+}
+
+function test6() {
+    window.location.href = 'googlechromes://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389';
+}
+
+function test7() {
+    window.open(FULL, '_blank');
+}
+
+function test8() {
+    window.open(FULL, '_system');
+}
+
+function test9() {
+    var a = document.createElement('a');
+    a.href = FULL;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function test10() {
+    window.location.href = FULL;
+}
+
+function test11() {
+    var intentUrl = 'intent://' + SHORT.replace('https://', '') +
+        '#Intent;scheme=https;action=android.intent.action.VIEW;end';
+    window.location.href = intentUrl;
+}
+
+function test12() {
+    var a = document.createElement('a');
+    a.href = 'x-safari-https://google.com';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+</script>
+
+</body>
+</html>
