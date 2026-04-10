@@ -71,12 +71,6 @@
         Скопировать ссылку
     </a>
 
-    <div id="chrome-failed" class="hidden" style="margin-top:16px;">
-        <div style="padding:14px;background:#fff3cd;border-radius:12px;color:#856404;font-size:14px;line-height:1.5;margin-bottom:12px;">
-            Chrome не установлен? Скопируйте ссылку и откройте в Safari
-        </div>
-    </div>
-
     <div class="divider">или откройте вручную</div>
 
     <div class="steps">
@@ -98,7 +92,6 @@ var isInApp = /Instagram|FBAN|FBAV/i.test(ua);
 var isAndroid = /Android/i.test(ua);
 var isIOS = /iPhone|iPad|iPod/i.test(ua);
 
-// Если НЕ in-app браузер — сразу редирект
 if (!isInApp) {
     document.getElementById('page-inapp').classList.add('hidden');
     document.getElementById('page-normal').classList.remove('hidden');
@@ -107,7 +100,6 @@ if (!isInApp) {
 
 function openExternal() {
     if (isAndroid) {
-        // Android: Intent URI — надёжно открывает в системном браузере
         var intentUrl = 'intent://' + TARGET.replace('https://', '') +
             '#Intent;scheme=https;action=android.intent.action.VIEW;end';
         window.location.href = intentUrl;
@@ -115,28 +107,12 @@ function openExternal() {
     }
 
     if (isIOS) {
-        // iOS: x-safari-https на промежуточную страницу go.html (без query params)
-        // go.html уже в Safari сделает редирект на Avito
-        // Проблема: x-safari-https с ?params Safari воспринимает как поисковый запрос
-        // Решение: открываем чистый URL без параметров
-        var currentHost = window.location.host;
-        var safariUrl = 'x-safari-https://' + currentHost + '/go.html';
-        window.location.href = safariUrl;
-
-        // Фоллбэк: если x-safari-https не сработал, пробуем Chrome
-        setTimeout(function() {
-            var chromeUrl = 'googlechromes://' + TARGET.replace('https://', '');
-            window.location.href = chromeUrl;
-        }, 1500);
-
-        // Если и Chrome нет — показываем подсказку
-        setTimeout(function() {
-            document.getElementById('chrome-failed').classList.remove('hidden');
-        }, 3000);
+        // x-safari-https — открывает Safari
+        // Только хост+путь, без query params (иначе Safari кидает в поиск)
+        window.location.href = 'x-safari-https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389';
         return;
     }
 
-    // Fallback
     window.location.href = TARGET;
 }
 
