@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Перейти на Avito</title>
+    <title>Кожаный чехол на iPhone 17 Pro</title>
     <meta property="og:title" content="Кожаный чехол на iPhone 17 Pro">
-    <meta property="og:description" content="Открыть на Avito">
-    <meta http-equiv="refresh" content="3;url=https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnQPQALXXLWl3Bd2Ya_mzrvHxs68jRgH-svENE43zn0FlvE-bd_6IShLkhM3U_aem_7v-YtZCIiGnbjc774_3Tng">
+    <meta property="og:description" content="Смотреть на Avito">
+    <meta property="og:type" content="website">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{
@@ -20,16 +20,9 @@
             padding:24px;
         }
         .c{text-align:center;max-width:380px;width:100%}
-        .spinner{
-            width:36px;height:36px;
-            border:3px solid #eee;border-top-color:#00aaff;
-            border-radius:50%;
-            animation:s .7s linear infinite;
-            margin:0 auto 20px;
-        }
-        @keyframes s{to{transform:rotate(360deg)}}
-        .title{font-size:18px;font-weight:600;color:#222;margin-bottom:12px}
-        .sub{color:#888;font-size:14px;line-height:1.5;margin-bottom:24px}
+        .icon{font-size:48px;margin-bottom:16px}
+        .title{font-size:20px;font-weight:700;color:#222;margin-bottom:8px}
+        .sub{color:#888;font-size:14px;line-height:1.5;margin-bottom:28px}
         .btn{
             display:block;
             width:100%;
@@ -42,55 +35,61 @@
             font-weight:600;
             text-align:center;
             -webkit-tap-highlight-color:transparent;
+            transition:background .15s;
         }
         .btn:active{background:#0095e0}
-        .hint{
-            margin-top:20px;
-            padding:16px;
-            background:#f7f7f7;
-            border-radius:12px;
-            font-size:13px;
-            color:#666;
-            line-height:1.6;
+        .divider{
+            margin:24px 0;
+            display:flex;align-items:center;gap:12px;
+            color:#ccc;font-size:13px;
         }
-        .hint b{color:#333}
+        .divider::before,.divider::after{
+            content:'';flex:1;height:1px;background:#eee;
+        }
+        .steps{
+            padding:20px;
+            background:#f7f7f7;
+            border-radius:14px;
+            text-align:left;
+            font-size:14px;
+            color:#555;
+            line-height:1.7;
+        }
+        .steps b{color:#222}
+        .step-num{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            width:22px;height:22px;
+            background:#00aaff;
+            color:#fff;
+            border-radius:50%;
+            font-size:12px;
+            font-weight:700;
+            margin-right:6px;
+        }
     </style>
 </head>
 <body>
 
 <div class="c">
-    <div class="spinner"></div>
-    <div class="title">Переходим на Avito...</div>
-    <div class="sub">Если страница не открылась автоматически:</div>
-    <a class="btn" id="link" href="https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnQPQALXXLWl3Bd2Ya_mzrvHxs68jRgH-svENE43zn0FlvE-bd_6IShLkhM3U_aem_7v-YtZCIiGnbjc774_3Tng" target="_blank" rel="noopener">
-        Открыть ссылку
+    <div class="icon">🛒</div>
+    <div class="title">Кожаный чехол на iPhone 17 Pro</div>
+    <div class="sub">Чтобы открыть объявление, нажмите кнопку ниже</div>
+
+    <a class="btn" id="link"
+       href="https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnQPQALXXLWl3Bd2Ya_mzrvHxs68jRgH-svENE43zn0FlvE-bd_6IShLkhM3U_aem_7v-YtZCIiGnbjc774_3Tng"
+       target="_blank" rel="noopener">
+        Открыть на Avito
     </a>
-    <div class="hint">
-        Если кнопка не помогла — нажмите <b>⋯</b> (меню)<br>внизу справа → <b>«Открыть в браузере»</b>
+
+    <div class="divider">или</div>
+
+    <div class="steps">
+        <div><span class="step-num">1</span> Нажмите <b>⋯</b> или <b>···</b> внизу справа</div>
+        <div><span class="step-num">2</span> Выберите <b>«Открыть в браузере»</b></div>
     </div>
 </div>
-
-<script>
-(function(){
-    var url = document.getElementById('link').href;
-
-    // Метод 1: JS редирект сразу
-    window.location.href = url;
-
-    // Метод 2: повторная попытка через 500мс
-    setTimeout(function(){ window.location.href = url; }, 500);
-
-    // Метод 3: window.open
-    setTimeout(function(){
-        try { window.open(url, '_blank'); } catch(e){}
-    }, 1000);
-
-    // Метод 4: программный клик по ссылке
-    setTimeout(function(){
-        try { document.getElementById('link').click(); } catch(e){}
-    }, 1500);
-})();
-</script>
 
 </body>
 </html>
