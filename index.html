@@ -2,130 +2,95 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кожаный чехол на iPhone 17 Pro</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Перейти на Avito</title>
     <meta property="og:title" content="Кожаный чехол на iPhone 17 Pro">
-    <meta property="og:description" content="Смотреть объявление на Avito">
-    <meta property="og:type" content="website">
-
+    <meta property="og:description" content="Открыть на Avito">
+    <meta http-equiv="refresh" content="3;url=https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnQPQALXXLWl3Bd2Ya_mzrvHxs68jRgH-svENE43zn0FlvE-bd_6IShLkhM3U_aem_7v-YtZCIiGnbjc774_3Tng">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            background:#fff;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            min-height:100dvh;
+            padding:24px;
         }
-        .container { text-align: center; max-width: 400px; }
-        .spinner {
-            width: 40px; height: 40px;
-            border: 3px solid #ddd;
-            border-top-color: #00aaff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 20px;
+        .c{text-align:center;max-width:380px;width:100%}
+        .spinner{
+            width:36px;height:36px;
+            border:3px solid #eee;border-top-color:#00aaff;
+            border-radius:50%;
+            animation:s .7s linear infinite;
+            margin:0 auto 20px;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        p { color: #555; font-size: 16px; margin-bottom: 16px; }
-        .btn {
-            display: inline-block;
-            padding: 16px 40px;
-            background: #00aaff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 12px;
-            font-size: 17px;
-            font-weight: 600;
-            margin-top: 8px;
+        @keyframes s{to{transform:rotate(360deg)}}
+        .title{font-size:18px;font-weight:600;color:#222;margin-bottom:12px}
+        .sub{color:#888;font-size:14px;line-height:1.5;margin-bottom:24px}
+        .btn{
+            display:block;
+            width:100%;
+            padding:18px 24px;
+            background:#00aaff;
+            color:#fff;
+            text-decoration:none;
+            border-radius:14px;
+            font-size:17px;
+            font-weight:600;
+            text-align:center;
+            -webkit-tap-highlight-color:transparent;
         }
-        .hint {
-            color: #999;
-            font-size: 13px;
-            margin-top: 16px;
-            line-height: 1.5;
+        .btn:active{background:#0095e0}
+        .hint{
+            margin-top:20px;
+            padding:16px;
+            background:#f7f7f7;
+            border-radius:12px;
+            font-size:13px;
+            color:#666;
+            line-height:1.6;
         }
+        .hint b{color:#333}
     </style>
 </head>
 <body>
-    <div class="container" id="loading">
-        <div class="spinner"></div>
-        <p>Переходим на Avito...</p>
+
+<div class="c">
+    <div class="spinner"></div>
+    <div class="title">Переходим на Avito...</div>
+    <div class="sub">Если страница не открылась автоматически:</div>
+    <a class="btn" id="link" href="https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnQPQALXXLWl3Bd2Ya_mzrvHxs68jRgH-svENE43zn0FlvE-bd_6IShLkhM3U_aem_7v-YtZCIiGnbjc774_3Tng" target="_blank" rel="noopener">
+        Открыть ссылку
+    </a>
+    <div class="hint">
+        Если кнопка не помогла — нажмите <b>⋯</b> (меню)<br>внизу справа → <b>«Открыть в браузере»</b>
     </div>
+</div>
 
-    <div class="container" id="manual" style="display:none;">
-        <p style="font-size:18px; color:#333; font-weight:600;">Откройте в браузере</p>
-        <p>Встроенный браузер Instagram не поддерживает переход. Нажмите кнопку ниже:</p>
-        <a class="btn" id="manual-link" href="#">Открыть в браузере</a>
-        <p class="hint">
-            Или нажмите <b>⋯</b> (три точки) в правом нижнем углу<br>
-            → <b>«Открыть в браузере»</b>
-        </p>
-    </div>
+<script>
+(function(){
+    var url = document.getElementById('link').href;
 
-    <script>
-        (function() {
-            var TARGET = 'https://www.avito.ru/moskva/telefony/kozhanyy_chehol_na_iphone_17_pro_8051366389?utm_campaign=native&utm_medium=item_page_ios&utm_source=soc_sharing_seller&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnQPQALXXLWl3Bd2Ya_mzrvHxs68jRgH-svENE43zn0FlvE-bd_6IShLkhM3U_aem_7v-YtZCIiGnbjc774_3Tng';
+    // Метод 1: JS редирект сразу
+    window.location.href = url;
 
-            var ua = navigator.userAgent || '';
-            var isInApp = /Instagram|FBAN|FBAV|Line\/|Twitter|MicroMessenger/i.test(ua);
-            var isAndroid = /Android/i.test(ua);
-            var isIOS = /iPhone|iPad|iPod/i.test(ua);
+    // Метод 2: повторная попытка через 500мс
+    setTimeout(function(){ window.location.href = url; }, 500);
 
-            function showManual() {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('manual').style.display = 'block';
-                document.getElementById('manual-link').href = TARGET;
-            }
+    // Метод 3: window.open
+    setTimeout(function(){
+        try { window.open(url, '_blank'); } catch(e){}
+    }, 1000);
 
-            // Не in-app — просто редирект
-            if (!isInApp) {
-                window.location.replace(TARGET);
-                return;
-            }
+    // Метод 4: программный клик по ссылке
+    setTimeout(function(){
+        try { document.getElementById('link').click(); } catch(e){}
+    }, 1500);
+})();
+</script>
 
-            // === ANDROID ===
-            if (isAndroid) {
-                // Метод 1: Intent с fallback на любой браузер
-                var intentUrl = 'intent://' +
-                    TARGET.replace('https://', '') +
-                    '#Intent;scheme=https;action=android.intent.action.VIEW;end';
-                window.location.href = intentUrl;
-                setTimeout(showManual, 2500);
-                return;
-            }
-
-            // === iOS ===
-            if (isIOS) {
-                // Метод 1: Трюк с window.open — иногда пробивает in-app браузер
-                var w = window.open(TARGET, '_blank');
-
-                // Метод 2: Создать невидимый <a target=_blank> и программно кликнуть
-                setTimeout(function() {
-                    var a = document.createElement('a');
-                    a.href = TARGET;
-                    a.target = '_blank';
-                    a.rel = 'noopener noreferrer';
-                    document.body.appendChild(a);
-                    a.click();
-                }, 300);
-
-                // Метод 3: Через location с параметром, ломающим кэш in-app
-                setTimeout(function() {
-                    window.location.href = TARGET + '&_t=' + Date.now();
-                }, 800);
-
-                // Если ничего не сработало — показываем кнопку + инструкцию
-                setTimeout(showManual, 2000);
-                return;
-            }
-
-            // Десктоп / другое
-            window.location.replace(TARGET);
-        })();
-    </script>
 </body>
 </html>
